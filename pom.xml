@@ -17,12 +17,17 @@
         <module>sp-rpc-facade</module>
         <module>sp-rpc-protocol</module>
         <module>sp-rpc-test</module>
+        <module>sp-rpc-proxy</module>
     </modules>
 
     <properties>
         <project.version>1.0.0-SNAPSHOT</project.version>
+        <maven.compiler.source>8</maven.compiler.source>
+        <maven.compiler.target>8</maven.compiler.target>
         <sp.base.dependencies.version>1.0.0-SNAPSHOT</sp.base.dependencies.version>
         <spring-boot.version>2.1.11.RELEASE</spring-boot.version>
+
+        <hessian.version>4.0.63</hessian.version>
     </properties>
 
     <dependencyManagement>
@@ -63,6 +68,12 @@
                 <groupId>com.sp.rpc</groupId>
                 <artifactId>sp-rpc-protocol</artifactId>
                 <version>${project.version}</version>
+            </dependency>
+
+            <dependency>
+                <groupId>com.caucho</groupId>
+                <artifactId>hessian</artifactId>
+                <version>${hessian.version}</version>
             </dependency>
         </dependencies>
     </dependencyManagement>
