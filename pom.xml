@@ -21,12 +21,13 @@
     </modules>
 
     <properties>
-        <project.version>1.0.0-SNAPSHOT</project.version>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
+
+        <project.version>1.0.0-SNAPSHOT</project.version>
         <sp.base.dependencies.version>1.0.0-SNAPSHOT</sp.base.dependencies.version>
         <spring-boot.version>2.1.11.RELEASE</spring-boot.version>
-
+        <netty.version>4.1.77.Final</netty.version>
         <hessian.version>4.0.63</hessian.version>
     </properties>
 
@@ -70,6 +71,11 @@
                 <version>${project.version}</version>
             </dependency>
 
+            <dependency>
+                <groupId>io.netty</groupId>
+                <artifactId>netty-all</artifactId>
+                <version>${netty.version}</version>
+            </dependency>
             <dependency>
                 <groupId>com.caucho</groupId>
                 <artifactId>hessian</artifactId>

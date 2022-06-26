@@ -1,10 +1,12 @@
 package com.sp.rpc.protocol.serialization;
 
+import com.caucho.hessian.io.HessianSerializerInput;
 import com.caucho.hessian.io.HessianSerializerOutput;
 import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
+import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
@@ -16,6 +18,7 @@ import java.io.IOException;
 @Component
 @Slf4j
 public class HessianSerialization implements RpcSerialization{
+    @Override
     public <T> byte[] serialize(T obj) throws IOException {
         if(obj == null){
             throw new NullPointerException();
@@ -35,7 +38,21 @@ public class HessianSerialization implements RpcSerialization{
         return results;
     }
 
+    @SuppressWarnings("unchecked")
+    @Override
     public <T> T deserialize(byte[] data, Class<T> clz) throws IOException {
-        return null;
+        if(data == null){
+            throw new NullPointerException();
+        }
+
+        T result;
+        try(ByteArrayInputStream is = new ByteArrayInputStream(data)) {
+            HessianSerializerInput hessianInput = new HessianSerializerInput(is);
+            result = (T)hessianInput.readObject(clz);
+        }catch (Exception e){
+            throw new SerializationException(e);
+        }
+
+        return result;
     }
 }
