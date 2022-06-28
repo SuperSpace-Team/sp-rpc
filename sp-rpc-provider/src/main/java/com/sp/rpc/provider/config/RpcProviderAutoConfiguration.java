@@ -1,9 +1,8 @@
 package com.sp.rpc.provider.config;
 
 import com.sp.rpc.provider.RegistryFactory;
-import com.sp.rpc.provider.RegistryService;
+import com.sp.rpc.registry.RegistryService;
 import com.sp.rpc.provider.RpcProvider;
-import com.sp.rpc.provider.RpcServer;
 import com.sp.rpc.provider.enums.RegistryType;
 import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.context.annotation.Bean;

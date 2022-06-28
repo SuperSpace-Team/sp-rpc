@@ -1,7 +1,7 @@
 package com.sp.rpc.provider;
 
-import com.sp.rpc.provider.config.RpcProperties;
 import com.sp.rpc.provider.enums.RegistryType;
+import com.sp.rpc.registry.RegistryService;
 
 /**
  * [Add Description Here]
