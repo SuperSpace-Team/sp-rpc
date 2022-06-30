@@ -9,4 +9,6 @@ public class ProtocolConstant {
     public final static int HEADER_TOTAL_LEN = 20;
 
     public final static Short MAGIC = 1000;
+
+    public final static Byte VERSION = 0x1;
 }

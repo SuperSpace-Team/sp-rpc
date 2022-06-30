@@ -6,10 +6,13 @@ import com.sp.rpc.protocol.definition.SpRpcRequest;
 import com.sp.rpc.protocol.definition.SpRpcResponse;
 import com.sp.rpc.protocol.enums.MsgStatusEnum;
 import com.sp.rpc.protocol.enums.MsgTypeEnum;
+import com.sp.rpc.registry.utils.RpcServiceHelper;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cglib.reflect.FastClass;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.Map;
 
 /**
@@ -19,6 +22,9 @@ import java.util.Map;
  */
 @Slf4j
 public class RpcRequestHandler extends SimpleChannelInboundHandler<SpRpcProtocol<SpRpcRequest>> {
+    /**
+     * 存储服务提供者对外开放的接口
+     */
     private final Map<String, Object> rpcServiceMap;
 
     public RpcRequestHandler(Map<String, Object> rpcServiceMap){
@@ -52,8 +58,24 @@ public class RpcRequestHandler extends SimpleChannelInboundHandler<SpRpcProtocol
        });
     }
 
-    private Object handle(SpRpcRequest request) {
-        //TODO 实现RPC请求
-        return null;
+    private Object handle(SpRpcRequest request) throws InvocationTargetException {
+        String serviceKey = RpcServiceHelper.buildServiceKey(request.getClassName(), request.getServiceVersion());
+        Object serviceBean = rpcServiceMap.get(serviceKey);
+
+        if(serviceBean == null){
+            throw new RuntimeException(String.format("Service not exist:%s:%s",
+                    request.getClassName(), request.getMethodName()));
+        }
+
+        Class<?> serviceClass = serviceBean.getClass();
+        String methodName = request.getMethodName();
+        Class<?>[] parameterTypes = request.getParamTypes();
+        Object[] parameters = request.getParams();
+
+        //CGLib FastClass机制,通过索引定位到要调用的方法
+        FastClass fastClass = FastClass.create(serviceClass);
+        int methodIndex = fastClass.getIndex(methodName, parameterTypes);
+
+        return fastClass.invoke(methodIndex, serviceBean, parameters);
     }
 }

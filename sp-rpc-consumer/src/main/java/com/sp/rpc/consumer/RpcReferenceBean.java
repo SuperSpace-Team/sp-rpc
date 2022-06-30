@@ -1,6 +1,12 @@
 package com.sp.rpc.consumer;
 
+import com.sp.rpc.registry.RegistryFactory;
+import com.sp.rpc.registry.RegistryService;
+import com.sp.rpc.registry.RpcInvokerProxy;
+import com.sp.rpc.registry.enums.RegistryType;
 import org.springframework.beans.factory.FactoryBean;
+
+import java.lang.reflect.Proxy;
 
 /**
  * [Add Description Here]
@@ -30,7 +36,10 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     public void init() throws Exception{
         //动态生成代理对象并赋值给object
-
+        RegistryService registryService = RegistryFactory.getInstance(
+                this.registryAddr, RegistryType.valueOf(this.registryType));
+        this.object = Proxy.newProxyInstance(interfaceClass.getClassLoader(),new Class<?>[]{ interfaceClass },
+                new RpcInvokerProxy(serviceVersion, timeout, registryService));
     }
 
     public void setInterfaceClass(Class<?> interfaceClass) {

@@ -33,6 +33,10 @@
             <groupId>com.caucho</groupId>
             <artifactId>hessian</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sp.rpc</groupId>
+            <artifactId>sp-rpc-registry</artifactId>
+        </dependency>
     </dependencies>
 
 </project>

@@ -35,5 +35,9 @@
             <groupId>org.apache.curator</groupId>
             <artifactId>curator-x-discovery</artifactId>
         </dependency>
+        <dependency>
+            <groupId>com.sp.rpc</groupId>
+            <artifactId>sp-rpc-protocol</artifactId>
+        </dependency>
     </dependencies>
 </project>
