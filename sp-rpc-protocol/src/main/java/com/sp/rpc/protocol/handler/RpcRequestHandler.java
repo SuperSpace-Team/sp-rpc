@@ -72,7 +72,7 @@ public class RpcRequestHandler extends SimpleChannelInboundHandler<SpRpcProtocol
         Class<?>[] parameterTypes = request.getParamTypes();
         Object[] parameters = request.getParams();
 
-        //CGLib FastClass机制,通过索引定位到要调用的方法
+        //CGLib FastClass机制-生成一个FastClass子类、子类为代理类生成一个索引, 通过索引定位到要调用的方法
         FastClass fastClass = FastClass.create(serviceClass);
         int methodIndex = fastClass.getIndex(methodName, parameterTypes);
 

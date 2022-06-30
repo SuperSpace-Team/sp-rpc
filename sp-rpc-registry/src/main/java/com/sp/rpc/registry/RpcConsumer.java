@@ -8,6 +8,7 @@ import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
 import lombok.extern.slf4j.Slf4j;
 
 /**
@@ -17,9 +18,8 @@ import lombok.extern.slf4j.Slf4j;
  */
 @Slf4j
 public class RpcConsumer {
-    Bootstrap bootstrap;
-
-    EventLoopGroup eventLoopGroup;
+    Bootstrap bootstrap = new Bootstrap();
+    EventLoopGroup eventLoopGroup = new NioEventLoopGroup();
 
     public RpcConsumer() {
     }
