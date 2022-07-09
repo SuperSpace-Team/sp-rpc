@@ -46,7 +46,7 @@ public class RpcInvokerProxy implements InvocationHandler {
         msgHeader.setRequestId(requestId);
         msgHeader.setSerialization((byte) SerializationTypeEnum.HESSIAN.getSerializationType());
         msgHeader.setMsgType((byte) MsgTypeEnum.REQUEST.getMsgType());
-        msgHeader.setStatus((byte)0x1);
+        msgHeader.setStatus((byte) 0x1);
         protocol.setMsgHeader(msgHeader);
 
         SpRpcRequest request = new SpRpcRequest();

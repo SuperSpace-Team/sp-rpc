@@ -9,7 +9,7 @@ public enum SerializationTypeEnum {
     HESSIAN(Byte.parseByte("1")),
     JSON(Byte.parseByte("2"));
 
-    SerializationTypeEnum(byte serializationType){
+    SerializationTypeEnum(byte serializationType) {
         this.serializationType = serializationType;
     }
 
@@ -23,9 +23,9 @@ public enum SerializationTypeEnum {
         this.serializationType = serializationType;
     }
 
-    public static SerializationTypeEnum findByType(byte serializationType){
-        for(SerializationTypeEnum serializationTypeEnum : SerializationTypeEnum.values()){
-            if(serializationTypeEnum.getSerializationType() == serializationType){
+    public static SerializationTypeEnum findByType(byte serializationType) {
+        for (SerializationTypeEnum serializationTypeEnum : SerializationTypeEnum.values()) {
+            if (serializationTypeEnum.getSerializationType() == serializationType) {
                 return serializationTypeEnum;
             }
         }

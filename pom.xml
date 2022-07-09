@@ -23,7 +23,8 @@
     <properties>
         <maven.compiler.source>8</maven.compiler.source>
         <maven.compiler.target>8</maven.compiler.target>
-
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+        <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
         <project.version>1.0.0-SNAPSHOT</project.version>
         <sp.base.dependencies.version>1.0.0-SNAPSHOT</sp.base.dependencies.version>
         <spring-boot.version>2.1.11.RELEASE</spring-boot.version>

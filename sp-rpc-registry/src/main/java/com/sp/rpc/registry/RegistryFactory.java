@@ -9,8 +9,8 @@ import com.sp.rpc.registry.enums.RegistryType;
  */
 public class RegistryFactory {
 
-    public static RegistryService getInstance(String registryAddr, RegistryType type){
-        if(type.equals(RegistryType.ZooKeeper)) {
+    public static RegistryService getInstance(String registryAddr, RegistryType type) {
+        if (type.equals(RegistryType.ZooKeeper)) {
             try {
                 return new ZooKeeperRegistryService(registryAddr);
             } catch (Exception e) {

@@ -28,7 +28,7 @@ public class ZkConsistentHashLoadBalancer implements ServiceLoadBalancer<Service
         //TreeMap会对hashCode从小到大排序,顺时针找到第一个节点
         Map.Entry<Integer, ServiceInstance<ServiceMeta>> entry = hashRing.ceilingEntry(hashCode);
 
-        if(entry == null){
+        if (entry == null) {
             //若未找到大于hashCode的节点,则取第一个
             entry = hashRing.firstEntry();
         }
@@ -38,7 +38,7 @@ public class ZkConsistentHashLoadBalancer implements ServiceLoadBalancer<Service
 
     private TreeMap<Integer, ServiceInstance<ServiceMeta>> makeConsistentHashRing(List<ServiceInstance<ServiceMeta>> servers) {
         TreeMap<Integer, ServiceInstance<ServiceMeta>> hashRing = new TreeMap<>();
-        for(ServiceInstance<ServiceMeta> instance : servers){
+        for (ServiceInstance<ServiceMeta> instance : servers) {
             for (int i = 0; i < VIRTUAL_NODE_SIZE; i++) {
                 hashRing.put((buildServiceInstanceKey(instance) + VIRTUAL_NODE_SPLIT + i).hashCode(), instance);
             }

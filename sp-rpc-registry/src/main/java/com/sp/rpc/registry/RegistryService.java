@@ -12,6 +12,7 @@ import java.io.IOException;
 public interface RegistryService {
     /**
      * 注册节点
+     *
      * @param serviceMeta
      * @throws Exception
      */
@@ -19,6 +20,7 @@ public interface RegistryService {
 
     /**
      * 下线节点
+     *
      * @param serviceMeta
      * @throws Exception
      */
@@ -26,6 +28,7 @@ public interface RegistryService {
 
     /**
      * 服务发现
+     *
      * @param serviceName
      * @param invokerHashCode
      * @return
@@ -35,6 +38,7 @@ public interface RegistryService {
 
     /**
      * 服务销毁
+     *
      * @throws IOException
      */
     void destroy() throws IOException;

@@ -1,8 +1,8 @@
 package com.sp.rpc.registry;
 
+import com.sp.rpc.core.utils.RpcServiceHelper;
 import com.sp.rpc.registry.lb.ZkConsistentHashLoadBalancer;
 import com.sp.rpc.registry.model.ServiceMeta;
-import com.sp.rpc.registry.utils.RpcServiceHelper;
 import org.apache.curator.framework.CuratorFramework;
 import org.apache.curator.framework.CuratorFrameworkFactory;
 import org.apache.curator.retry.ExponentialBackoffRetry;
@@ -46,11 +46,11 @@ public class ZooKeeperRegistryService implements RegistryService {
     public void register(ServiceMeta serviceMeta) throws Exception {
         ServiceInstance<ServiceMeta> serviceInstance =
                 ServiceInstance.<ServiceMeta>builder()
-                .name(RpcServiceHelper.buildServiceKey(serviceMeta.getServerName(), serviceMeta.getServerVersion()))
-                .address(serviceMeta.getServerAddr())
-                .port(serviceMeta.getServerPort())
-                .payload(serviceMeta)
-                .build();
+                        .name(RpcServiceHelper.buildServiceKey(serviceMeta.getServerName(), serviceMeta.getServerVersion()))
+                        .address(serviceMeta.getServerAddr())
+                        .port(serviceMeta.getServerPort())
+                        .payload(serviceMeta)
+                        .build();
         serviceDiscovery.registerService(serviceInstance);
     }
 
@@ -67,7 +67,7 @@ public class ZooKeeperRegistryService implements RegistryService {
         ServiceInstance<ServiceMeta> instance = new ZkConsistentHashLoadBalancer().select(
                 (List<ServiceInstance<ServiceMeta>>) serviceInstances, invokerHashCode);
 
-        if(instance != null){
+        if (instance != null) {
             return instance.getPayload();
         }
         return null;

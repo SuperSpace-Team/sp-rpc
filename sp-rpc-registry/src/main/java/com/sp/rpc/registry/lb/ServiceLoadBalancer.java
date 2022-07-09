@@ -11,7 +11,8 @@ public interface ServiceLoadBalancer<T> {
 
     /**
      * 选择服务 节点
-     * @param servers 服务节点列表
+     *
+     * @param servers  服务节点列表
      * @param hashCode 客户端对象的Hash Code
      * @return
      */

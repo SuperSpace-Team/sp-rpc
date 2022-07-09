@@ -24,9 +24,9 @@ public enum MsgTypeEnum {
         this.msgType = msgType;
     }
 
-    public static MsgTypeEnum findByType(byte msgType){
-        for(MsgTypeEnum msgTypeEnum : MsgTypeEnum.values()){
-            if(msgTypeEnum.getMsgType() == msgType){
+    public static MsgTypeEnum findByType(byte msgType) {
+        for (MsgTypeEnum msgTypeEnum : MsgTypeEnum.values()) {
+            if (msgTypeEnum.getMsgType() == msgType) {
                 return msgTypeEnum;
             }
         }

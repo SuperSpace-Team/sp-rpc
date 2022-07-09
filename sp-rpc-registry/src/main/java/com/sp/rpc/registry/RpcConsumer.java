@@ -1,9 +1,9 @@
 package com.sp.rpc.registry;
 
+import com.sp.rpc.core.utils.RpcServiceHelper;
 import com.sp.rpc.protocol.definition.SpRpcProtocol;
 import com.sp.rpc.protocol.definition.SpRpcRequest;
 import com.sp.rpc.registry.model.ServiceMeta;
-import com.sp.rpc.registry.utils.RpcServiceHelper;
 import io.netty.bootstrap.Bootstrap;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -29,7 +29,7 @@ public class RpcConsumer {
         this.eventLoopGroup = eventLoopGroup;
     }
 
-    public void sendRequest(SpRpcProtocol<SpRpcRequest> protocol, RegistryService registryService) throws Exception{
+    public void sendRequest(SpRpcProtocol<SpRpcRequest> protocol, RegistryService registryService) throws Exception {
         SpRpcRequest request = protocol.getBody();
         Object[] params = request.getParams();
         String serviceKey = RpcServiceHelper.buildServiceKey(request.getClassName(), request.getServiceVersion());
@@ -37,12 +37,12 @@ public class RpcConsumer {
         int invokeHashCode = params.length > 0 ? params[0].hashCode() : serviceKey.hashCode();
         ServiceMeta serviceMeta = registryService.discovery(serviceKey, invokeHashCode);
 
-        if(serviceMeta != null){
+        if (serviceMeta != null) {
             ChannelFuture future = bootstrap.connect(serviceMeta.getServerAddr(), serviceMeta.getServerPort()).sync();
-            future.addListener((ChannelFutureListener)arg0 -> {
-                if(future.isSuccess()){
+            future.addListener((ChannelFutureListener) arg0 -> {
+                if (future.isSuccess()) {
                     log.info("Connect RPC server {} on port {} succeed.", serviceMeta.getServerAddr(), serviceMeta.getServerPort());
-                }else {
+                } else {
                     log.error("Connect RPC server {} on port {} failed.", serviceMeta.getServerAddr(), serviceMeta.getServerPort());
                     future.cause().printStackTrace();
                     eventLoopGroup.shutdownGracefully();

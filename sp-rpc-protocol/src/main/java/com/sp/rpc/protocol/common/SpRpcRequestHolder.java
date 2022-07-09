@@ -1,6 +1,5 @@
 package com.sp.rpc.protocol.common;
 
-import com.sp.rpc.protocol.definition.SpRpcProtocol;
 import com.sp.rpc.protocol.definition.SpRpcResponse;
 
 import java.util.Map;

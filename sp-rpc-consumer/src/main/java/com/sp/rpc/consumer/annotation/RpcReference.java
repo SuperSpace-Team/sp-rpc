@@ -18,24 +18,28 @@ import java.lang.annotation.Target;
 public @interface RpcReference {
     /**
      * 服务版本
+     *
      * @return
      */
     String serviceVersion() default "1.0";
 
     /**
      * 注册中心类型
+     *
      * @return
      */
     String registryType() default "ZooKeeper";
 
     /**
      * 注册中心地址
+     *
      * @return
      */
     String registryAddr() default "localhost:2181";
 
     /**
      * 超时时长
+     *
      * @return
      */
     long timeout() default 5000;

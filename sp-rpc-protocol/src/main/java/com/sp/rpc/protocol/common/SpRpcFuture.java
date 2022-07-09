@@ -22,7 +22,7 @@ public class SpRpcFuture<T> {
         this.promise = promise;
     }
 
-    public Promise<T> getPromise(){
+    public Promise<T> getPromise() {
         return promise;
     }
 

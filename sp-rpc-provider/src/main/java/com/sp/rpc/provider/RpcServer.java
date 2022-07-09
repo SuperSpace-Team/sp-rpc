@@ -49,7 +49,7 @@ public class RpcServer {
             ChannelFuture channelFuture = bootstrap.bind(this.serverAddr, this.serverPort).sync();
             log.info("serverAddr {} started on port{}", this.serverAddr, this.serverPort);
             channelFuture.channel().closeFuture().sync();
-        }finally {
+        } finally {
             boss.shutdownGracefully();
             workder.shutdownGracefully();
         }

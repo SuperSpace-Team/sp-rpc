@@ -8,10 +8,10 @@ import com.sp.rpc.protocol.enums.SerializationTypeEnum;
  * @author luchao Created in 6/26/22 4:56 PM
  */
 public class SerializationFactory {
-    public static RpcSerialization getRpcSerialization(byte serializationType){
+    public static RpcSerialization getRpcSerialization(byte serializationType) {
         SerializationTypeEnum typeEnum = SerializationTypeEnum.findByType(serializationType);
 
-        switch (typeEnum){
+        switch (typeEnum) {
             case HESSIAN:
                 return new HessianSerialization();
             case JSON:

@@ -1,10 +1,10 @@
 package com.sp.rpc.provider;
 
+import com.sp.rpc.core.utils.RpcServiceHelper;
 import com.sp.rpc.provider.annotation.RpcService;
 import com.sp.rpc.provider.config.RpcProperties;
 import com.sp.rpc.registry.RegistryService;
 import com.sp.rpc.registry.model.ServiceMeta;
-import com.sp.rpc.registry.utils.RpcServiceHelper;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.InitializingBean;
@@ -50,7 +50,7 @@ public class RpcProvider implements InitializingBean, BeanPostProcessor {
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         //获取所有带有@RpcService注解的服务接口对象
         RpcService rpcService = bean.getClass().getAnnotation(RpcService.class);
-        if(rpcService != null){
+        if (rpcService != null) {
             String serviceName = rpcService.serviceInterface().getName();
             String serviceVersion = rpcService.serviceVersion();
 
@@ -65,7 +65,7 @@ public class RpcProvider implements InitializingBean, BeanPostProcessor {
                 //发布服务元数据到注册中心,在接收到RPC请求时直接取出对应的服务对象进行方法调用
                 rpcServiceMap.put(RpcServiceHelper.buildServiceKey(
                         serviceMeta.getServerName(), serviceMeta.getServerVersion()), bean);
-            }catch (Exception e){
+            } catch (Exception e) {
                 log.error("Failed to register service {}#{}", serviceName, serviceVersion, e);
             }
         }

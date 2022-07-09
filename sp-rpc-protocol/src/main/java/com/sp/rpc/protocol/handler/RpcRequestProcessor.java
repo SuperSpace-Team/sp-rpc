@@ -8,7 +8,7 @@ package com.sp.rpc.protocol.handler;
 public class RpcRequestProcessor {
 
 
-    public static void submitRequest(Runnable r){
+    public static void submitRequest(Runnable r) {
         //TODO ThreadPool Submit task
     }
 }

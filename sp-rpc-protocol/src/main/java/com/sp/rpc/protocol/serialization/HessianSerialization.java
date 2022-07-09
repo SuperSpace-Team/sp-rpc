@@ -2,7 +2,6 @@ package com.sp.rpc.protocol.serialization;
 
 import com.caucho.hessian.io.HessianSerializerInput;
 import com.caucho.hessian.io.HessianSerializerOutput;
-import com.sun.xml.internal.ws.encoding.soap.SerializationException;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
 
@@ -17,22 +16,22 @@ import java.io.IOException;
  */
 @Component
 @Slf4j
-public class HessianSerialization implements RpcSerialization{
+public class HessianSerialization implements RpcSerialization {
     @Override
     public <T> byte[] serialize(T obj) throws IOException {
-        if(obj == null){
+        if (obj == null) {
             throw new NullPointerException();
         }
 
         byte[] results;
         HessianSerializerOutput hessianOutput;
-        try(ByteArrayOutputStream os = new ByteArrayOutputStream()){
+        try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
             hessianOutput = new HessianSerializerOutput(os);
             hessianOutput.writeObject(obj);
             hessianOutput.flush();
             results = os.toByteArray();
-        }catch (Exception e){
-            throw new SerializationException(e);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         return results;
@@ -41,16 +40,16 @@ public class HessianSerialization implements RpcSerialization{
     @SuppressWarnings("unchecked")
     @Override
     public <T> T deserialize(byte[] data, Class<T> clz) throws IOException {
-        if(data == null){
+        if (data == null) {
             throw new NullPointerException();
         }
 
         T result;
-        try(ByteArrayInputStream is = new ByteArrayInputStream(data)) {
+        try (ByteArrayInputStream is = new ByteArrayInputStream(data)) {
             HessianSerializerInput hessianInput = new HessianSerializerInput(is);
-            result = (T)hessianInput.readObject(clz);
-        }catch (Exception e){
-            throw new SerializationException(e);
+            result = (T) hessianInput.readObject(clz);
+        } catch (Exception e) {
+            throw new RuntimeException(e);
         }
 
         return result;

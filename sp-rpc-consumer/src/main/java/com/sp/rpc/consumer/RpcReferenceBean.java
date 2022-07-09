@@ -26,7 +26,7 @@ public class RpcReferenceBean implements FactoryBean<Object> {
 
     private Object object;
 
-    public Object getObject(){
+    public Object getObject() {
         return object;
     }
 
@@ -34,11 +34,11 @@ public class RpcReferenceBean implements FactoryBean<Object> {
         return interfaceClass;
     }
 
-    public void init() throws Exception{
+    public void init() throws Exception {
         //动态生成代理对象并赋值给object
         RegistryService registryService = RegistryFactory.getInstance(
                 this.registryAddr, RegistryType.valueOf(this.registryType));
-        this.object = Proxy.newProxyInstance(interfaceClass.getClassLoader(),new Class<?>[]{ interfaceClass },
+        this.object = Proxy.newProxyInstance(interfaceClass.getClassLoader(), new Class<?>[]{interfaceClass},
                 new RpcInvokerProxy(serviceVersion, timeout, registryService));
     }
 

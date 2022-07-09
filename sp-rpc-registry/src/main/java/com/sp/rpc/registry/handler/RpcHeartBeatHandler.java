@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author luchao Created in 7/1/22 1:14 AM
  */
-public class RpcHeartBeatHandler  extends ChannelInboundHandlerAdapter {
+public class RpcHeartBeatHandler extends ChannelInboundHandlerAdapter {
 
     @Override
     public void channelActive(ChannelHandlerContext ctx) throws Exception {
@@ -21,7 +21,7 @@ public class RpcHeartBeatHandler  extends ChannelInboundHandlerAdapter {
 
     private void doHeartBeatTask(ChannelHandlerContext ctx) {
         ctx.executor().schedule(() -> {
-            if(ctx.channel().isActive()){
+            if (ctx.channel().isActive()) {
                 HeartBeatData heartBeatData = buildHeartBeatData();
                 ctx.writeAndFlush(heartBeatData);
                 doHeartBeatTask(ctx);

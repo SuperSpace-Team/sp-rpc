@@ -22,8 +22,6 @@ import java.util.LinkedHashMap;
 import java.util.Map;
 
 /**
- *
- *
  * @author luchao Created in 6/23/22 12:48 AM
  */
 @Component
@@ -46,18 +44,18 @@ public class RpcConsumerPostProcessor implements ApplicationContextAware, BeanCl
 
     @Override
     public void postProcessBeanFactory(final ConfigurableListableBeanFactory beanFactory) throws BeansException {
-        for (String beanDefName : beanFactory.getBeanDefinitionNames()){
+        for (String beanDefName : beanFactory.getBeanDefinitionNames()) {
             BeanDefinition bdf = beanFactory.getBeanDefinition(beanDefName);
             String beanClassName = bdf.getBeanClassName();
-            if(beanClassName != null){
+            if (beanClassName != null) {
                 Class<?> clazz = ClassUtils.resolveClassName(beanClassName, this.classLoader);
                 ReflectionUtils.doWithFields(clazz, this::parseRpcReference);
             }
         }
 
         final BeanDefinitionRegistry registry = (BeanDefinitionRegistry) beanFactory;
-        this.rpcRefBeanDefinitions.forEach((beanName, bdf) ->{
-            if(context.containsBean(beanName)){
+        this.rpcRefBeanDefinitions.forEach((beanName, bdf) -> {
+            if (context.containsBean(beanName)) {
                 throw new IllegalArgumentException("Spring context already has benn assumed!" + beanName);
             }
 
@@ -66,9 +64,9 @@ public class RpcConsumerPostProcessor implements ApplicationContextAware, BeanCl
         });
     }
 
-    private void parseRpcReference(Field field){
+    private void parseRpcReference(Field field) {
         RpcReference rpcReference = AnnotationUtils.getAnnotation(field, RpcReference.class);
-        if(rpcReference != null){
+        if (rpcReference != null) {
             BeanDefinitionBuilder builder = BeanDefinitionBuilder.genericBeanDefinition(RpcReferenceBean.class);
             builder.setInitMethodName(RpcConstants.INIT_METHOD_NAME);
             builder.addPropertyValue("interfaceClass", field.getType());

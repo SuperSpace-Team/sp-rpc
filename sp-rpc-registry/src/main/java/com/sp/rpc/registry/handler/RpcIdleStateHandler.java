@@ -11,7 +11,7 @@ import java.util.concurrent.TimeUnit;
  *
  * @author luchao Created in 7/1/22 1:12 AM
  */
-public class RpcIdleStateHandler  extends IdleStateHandler {
+public class RpcIdleStateHandler extends IdleStateHandler {
     public RpcIdleStateHandler(long readerIdleTime, long writerIdleTime, long allIdleTime, TimeUnit unit) {
         super(60, 0, 0, TimeUnit.SECONDS);
     }

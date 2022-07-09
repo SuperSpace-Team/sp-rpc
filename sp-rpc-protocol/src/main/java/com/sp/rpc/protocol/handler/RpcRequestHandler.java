@@ -1,12 +1,12 @@
 package com.sp.rpc.protocol.handler;
 
+import com.sp.rpc.core.utils.RpcServiceHelper;
 import com.sp.rpc.protocol.definition.MsgHeader;
 import com.sp.rpc.protocol.definition.SpRpcProtocol;
 import com.sp.rpc.protocol.definition.SpRpcRequest;
 import com.sp.rpc.protocol.definition.SpRpcResponse;
 import com.sp.rpc.protocol.enums.MsgStatusEnum;
 import com.sp.rpc.protocol.enums.MsgTypeEnum;
-import com.sp.rpc.registry.utils.RpcServiceHelper;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import lombok.extern.slf4j.Slf4j;
@@ -27,42 +27,42 @@ public class RpcRequestHandler extends SimpleChannelInboundHandler<SpRpcProtocol
      */
     private final Map<String, Object> rpcServiceMap;
 
-    public RpcRequestHandler(Map<String, Object> rpcServiceMap){
+    public RpcRequestHandler(Map<String, Object> rpcServiceMap) {
         this.rpcServiceMap = rpcServiceMap;
     }
 
     @Override
     protected void channelRead0(ChannelHandlerContext ctx, SpRpcProtocol<SpRpcRequest> protocol) throws Exception {
-       RpcRequestProcessor.submitRequest(() -> {
-           SpRpcProtocol<SpRpcResponse> resProtocol = new SpRpcProtocol<>();
-           SpRpcResponse response = new SpRpcResponse();
-           MsgHeader header = protocol.getMsgHeader();
-           header.setMsgType((byte) MsgTypeEnum.RESPONSE.getMsgType());
+        RpcRequestProcessor.submitRequest(() -> {
+            SpRpcProtocol<SpRpcResponse> resProtocol = new SpRpcProtocol<>();
+            SpRpcResponse response = new SpRpcResponse();
+            MsgHeader header = protocol.getMsgHeader();
+            header.setMsgType((byte) MsgTypeEnum.RESPONSE.getMsgType());
 
-           try {
-               //调用RPC服务
-               Object result = handle(protocol.getBody());
-               response.setData(result);
+            try {
+                //调用RPC服务
+                Object result = handle(protocol.getBody());
+                response.setData(result);
 
-               header.setStatus((byte) MsgStatusEnum.SUCCESS.getCode());
-               resProtocol.setMsgHeader(header);
-               resProtocol.setBody(response);
-           }catch (Throwable e){
-               header.setStatus((byte)MsgStatusEnum.FAILED.getCode());
-               response.setMessage(e.toString());
-               log.error("Process request error", header.getRequestId(), e);
-           }
+                header.setStatus((byte) MsgStatusEnum.SUCCESS.getCode());
+                resProtocol.setMsgHeader(header);
+                resProtocol.setBody(response);
+            } catch (Throwable e) {
+                header.setStatus((byte) MsgStatusEnum.FAILED.getCode());
+                response.setMessage(e.toString());
+                log.error("Process request error", header.getRequestId(), e);
+            }
 
-           //将数据写回服务消费者
-           ctx.writeAndFlush(resProtocol);
-       });
+            //将数据写回服务消费者
+            ctx.writeAndFlush(resProtocol);
+        });
     }
 
     private Object handle(SpRpcRequest request) throws InvocationTargetException {
         String serviceKey = RpcServiceHelper.buildServiceKey(request.getClassName(), request.getServiceVersion());
         Object serviceBean = rpcServiceMap.get(serviceKey);
 
-        if(serviceBean == null){
+        if (serviceBean == null) {
             throw new RuntimeException(String.format("Service not exist:%s:%s",
                     request.getClassName(), request.getMethodName()));
         }

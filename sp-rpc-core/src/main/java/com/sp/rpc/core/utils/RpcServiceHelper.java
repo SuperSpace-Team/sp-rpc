@@ -1,4 +1,4 @@
-package com.sp.rpc.registry.utils;
+package com.sp.rpc.core.utils;
 
 /**
  * [Add Description Here]
@@ -7,7 +7,7 @@ package com.sp.rpc.registry.utils;
  */
 public class RpcServiceHelper {
 
-    public static String buildServiceKey(String serviceName, String serviceVersion){
+    public static String buildServiceKey(String serviceName, String serviceVersion) {
         return String.join("#", serviceName, serviceVersion);
     }
 }
