@@ -7,7 +7,7 @@ import io.netty.channel.ChannelInboundHandlerAdapter;
 import java.util.concurrent.TimeUnit;
 
 /**
- * [Add Description Here]
+ * 向任务队列添加心跳数据上报定时任务
  *
  * @author luchao Created in 7/1/22 1:14 AM
  */
